@@ -7,6 +7,8 @@ import { Theme, StyledEngineProvider } from '@mui/material/styles'
 import { createTheme } from '@mui/material/styles'
 import { Typography } from '@mui/material'
 import StaticDatepicker from './lib/StaticDatepicker'
+import defaultTheme from './theme.json'
+import { green, purple } from '@mui/material/colors';
 
 declare module '@mui/styles/defaultTheme' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -22,17 +24,30 @@ declare module '@mui/styles/defaultTheme' {
 
 
 const App: FC = () => {
+    console.log("App")
     const [singleValue, setSingleValue] = useState<string | null>(null)
     const [multipleValue, setMultipleValue] = useState<Array<string | null>>([])
     const [weekValue, setWeekValue] = useState<string | null>(null)
     const [rangeValue, setRangeValue] = useState<[string | null, string | null]>([null, null])
 
-    const theme = createTheme()
+    const theme = createTheme({
+        palette: {
+          primary: {
+            main: purple[500],
+          },
+          secondary: {
+            main: green[500],
+          },
+        },
+        breakpoints: {
+            step: 5
+        }
+      });
 
     const sleep = () => new Promise((resolve) => setTimeout(resolve, 1000))
+    console.log({ theme })
 
     return (
-        <StyledEngineProvider injectFirst>
             <ThemeProvider theme={theme}>
                 <LocalizationProvider dateAdapter={AdapterMoment}>
                     <div>
@@ -165,7 +180,6 @@ const App: FC = () => {
                     </div>
                 </LocalizationProvider>
             </ThemeProvider>
-        </StyledEngineProvider>
     );
 }
 

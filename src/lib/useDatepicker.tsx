@@ -16,6 +16,7 @@ import { DateRangeDay } from './DateRangeDay'
 import useWeekUtils from './useWeekUtils'
 import { coerceArray } from './utils'
 import Loading from './Loading'
+import clsx from 'clsx'
 
 export declare type MuiTextFieldProps = TextFieldProps | Omit<TextFieldProps, 'variant'>;
 
@@ -28,7 +29,11 @@ const DATEPICKER_MEDIUM_HEIGHT = 244
 const DATEPICKER_SMALL_WIDTH = 220
 const DATEPICKER_SMALL_HEIGHT = 196
 
-const useStyles = makeStyles(({ spacing, palette: { primary, background, error } }: Theme) => ({
+const useStyles = makeStyles((theme: Theme) => 
+{
+ console.log({ theme })
+    const { spacing, palette: { primary, background, error } } = theme || {}
+    return ({
     date: {
         position: 'relative'
     },
@@ -193,7 +198,7 @@ const useStyles = makeStyles(({ spacing, palette: { primary, background, error }
         borderColor: `${error.dark}!important`,
         textDecoration: 'line-through'
     }
-}))
+})})
 
 const defaultRenderInput = (params1: MuiTextFieldProps) => <TextField {...params1} />
 
@@ -207,13 +212,13 @@ const scrollIntoView = debounce((el: HTMLDivElement) => {
 const useDatepicker = (
     props: StaticDatepickerProps
 ): {
-    datepickerProps: MuiDatePickerProps | MuiDateRangePickerProps
+    datepickerProps: MuiDatePickerProps<Date> | MuiDateRangePickerProps
     Component: ReactNode
     LoadingOverlayComponent: ReactNode
     textValue: string
     clear: () => void
     allProps: StaticDatepickerProps
-    handleMonthChange: (date?: Moment) => Promise<string[]>
+    handleMonthChange: (date?: Moment) => Promise<string[] | undefined>
 } => {
     const containerRef = useRef<HTMLDivElement>() as RefObject<HTMLDivElement>
     const isMountedRef = useRef(true)
@@ -230,11 +235,13 @@ const useDatepicker = (
         clonedProps.timezone = 'UTC'
     }
     if (clonedProps.dateFormat) {
-        clonedProps.inputFormat = clonedProps.dateFormat
+        clonedProps.dateFormat = clonedProps.dateFormat
     }
 
     useEffect(() => {
-        setMarkedDates(clonedProps.markedDates)
+        if(clonedProps.markedDates){
+          setMarkedDates(clonedProps.markedDates)
+        }
     }, [clonedProps.markedDates])
 
     const {
@@ -257,9 +264,9 @@ const useDatepicker = (
 
     const selectedDates: Moment[] = useMemo(
         () =>
-            coerceArray(clonedProps.value)
+            coerceArray(clonedProps.value!)
                 .filter(Boolean)
-                .map((date: string) => utils.startOfDay(moment.tz(date, timezone)))
+                .map((date: string) => utils.startOfDay(moment.tz(date, timezone)) )
                 .filter((date) => date.toISOString() !== '0001-01-01T00:00:00Z'),
         [clonedProps.value, timezone]
     )
@@ -298,6 +305,7 @@ const useDatepicker = (
                 clonedProps.onChange?.([])
                 break
             default:
+                if(mode === "week")
                 clonedProps.onChange?.('')
         }
     }, [clonedProps.mode, clonedProps.onChange])
@@ -333,7 +341,7 @@ const useDatepicker = (
         }
     }, [selectedDates, clonedProps.mode, formattedDates])
 
-    const weekUtils = useWeekUtils<Moment>(mode, datepickerValue)
+    const weekUtils = useWeekUtils<Moment>(mode!, datepickerValue)
 
     const handleMonthChange = useCallback(
         async (date?: Moment): Promise<string[] | undefined> => {
@@ -385,7 +393,7 @@ const useDatepicker = (
         if (containerRef.current) {
             const config: MutationObserverInit = { childList: true, subtree: true }
             const callback: MutationCallback = () => {
-                scrollIntoView(containerRef.current)
+                scrollIntoView(containerRef.current!)
             }
             const observer = new MutationObserver(callback)
             observer.observe(containerRef.current, config)
@@ -443,8 +451,8 @@ const useDatepicker = (
             const datepickerDate = day?.format('YYYY-MM-DD')
 
             const inCurrentMonth = dayComponentProps
-                ? dayComponentProps.inCurrentMonth
-                : (selectedDatesOrDateRangeDayProps as DateRangeDayProps<Moment>).inCurrentMonth
+                ? dayComponentProps.outsideCurrentMonth
+                : (selectedDatesOrDateRangeDayProps as DateRangeDayProps<Moment>).outsideCurrentMonth
 
             const isSelected =
                 inCurrentMonth && dayString && formattedDatesMMDDYYYY.includes(dayString)
@@ -458,12 +466,12 @@ const useDatepicker = (
                 disableMargin: true,
                 ...DayComponentProps,
                 className: clsx(DayComponentProps?.className, classes.date, {
-                    [propClasses?.date]: Boolean(propClasses?.date),
-                    [propClasses?.selected]: Boolean(propClasses?.selected) && isSelected,
+                    [propClasses?.date as any]: Boolean(propClasses?.date),
+                    [propClasses?.selected as any]: Boolean(propClasses?.selected) && isSelected,
                     [classes.marked]: isMarked,
                     [classes.selectedMarked]: isSelected && isMarked,
-                    [propClasses?.marked]: Boolean(propClasses?.marked) && isMarked,
-                    [propClasses?.selectedMarked]:
+                    [propClasses?.marked as any]: Boolean(propClasses?.marked) && isMarked,
+                    [propClasses?.selectedMarked as any]:
                         Boolean(propClasses?.selectedMarked) && isSelected && isMarked,
                     [shouldStrikeOutDateClassName || classes?.strikeOutDate]:
                         shouldStrikeOutDate && shouldStrikeOutDate(datepickerDate)
@@ -488,8 +496,8 @@ const useDatepicker = (
                     return (
                         <Day<Moment>
                             {...dayComponentProps}
-                            allowSameDateSelection
-                            selected={isSelected}
+                            // allowSameDateSelection
+                            selected={Boolean(isSelected)}
                             {...commonProps}
                         />
                     )
@@ -500,7 +508,7 @@ const useDatepicker = (
         [mode, formattedDatesMMDDYYYY, classes, propClasses, DayComponentProps, weekUtils]
     )
 
-    const datepickerProps: MuiDatePickerProps | MuiDateRangePickerProps = {
+    const datepickerProps: MuiDatePickerProps<Date> | MuiDateRangePickerProps = {
         calendars: 2,
         renderDay,
         renderInput: defaultRenderInput,
@@ -529,7 +537,7 @@ const useDatepicker = (
     } else {
         Component = (
             <div ref={containerRef} className={clsx(classes.root, { [classes[size]]: true })}>
-                <StaticDatePicker {...(datepickerProps as MuiDatePickerProps)} />
+                <StaticDatePicker {...(datepickerProps as MuiDatePickerProps<Date>)} />
             </div>
         )
     }

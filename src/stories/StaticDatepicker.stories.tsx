@@ -3,6 +3,16 @@ import { Meta, StoryFn } from '@storybook/react'
 import { StaticDatepicker, StaticDatepickerProps } from '../lib'
 import moment from 'moment-timezone'
 import { range, sampleSize } from 'lodash-es'
+import { ThemeProvider } from '@mui/styles'
+import { Theme } from '@mui/material/styles'
+import { green, purple } from '@mui/material/colors';
+import { createTheme } from '@mui/material/styles'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import App from '../App'
+import dayjs from 'dayjs'
 
 export default {
     title: 'Datepicker/Static',
@@ -24,15 +34,33 @@ const Template: StoryFn<StaticDatepickerProps> = (args) => {
             }, 500)
         })
 
+        const theme = createTheme({
+            palette: {
+              primary: {
+                main: purple[500],
+              },
+              secondary: {
+                main: green[500],
+              },
+            },
+          });
+
+        console.log({args})
+
     return (
         <>
-            <StaticDatepicker
+        <ThemeProvider theme={theme}>
+        <LocalizationProvider dateAdapter={AdapterMoment}>
+        {/* <StaticDatepicker
                 {...args}
                 value={state}
                 onChange={setState}
                 onMonthChange={handleMonthChange}
             />
-            <div>Value - {state}</div>
+            <div>Value - {state}</div> */}
+            hello
+        </LocalizationProvider>
+        </ThemeProvider>       
         </>
     )
 }
@@ -42,7 +70,6 @@ export const Default = Template.bind({})
 Default.args = {
     timezone: 'Asia/Kolkata',
     mode: false,
-    placeholder: 'Single Datepicker',
     value: null
 }
 
@@ -51,7 +78,6 @@ export const Multiple = Template.bind({})
 Multiple.args = {
     timezone: 'Asia/Kolkata',
     mode: 'multiple',
-    placeholder: 'Multiple Datepicker',
     value: []
 }
 
@@ -60,7 +86,6 @@ export const Range = Template.bind({})
 Range.args = {
     timezone: 'Asia/Kolkata',
     mode: 'range',
-    placeholder: 'Range Datepicker',
     value: [null, null]
 }
 
@@ -69,6 +94,5 @@ export const Week = Template.bind({})
 Week.args = {
     timezone: 'Asia/Kolkata',
     mode: 'week',
-    placeholder: 'Week Datepicker',
     value: null
 }

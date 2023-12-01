@@ -3,6 +3,7 @@ import { StaticDatepickerProps } from './types'
 import useDatepicker from './useDatepicker'
 import { makeStyles } from '@mui/styles'
 
+
 const useStyles = makeStyles(() => ({
     root: {
         position: 'relative'
@@ -26,11 +27,11 @@ const StaticDatepicker: FC<StaticDatepickerProps> = ({ renderInput: _renderInput
 }
 
 StaticDatepicker.defaultProps = {
-    displayStaticWrapperAs: 'static',
+    displayStaticWrapperAs: 'desktop',
     dateFormat: 'MMM DD, YYYY',
-    views: ['year', 'month', 'date'],
-    showToolbar: false,
-    allowKeyboardControl: false
+    views: ['year', 'month'],
+    // showToolbar: false,
+    // allowKeyboardControl: false
 }
 
 export default StaticDatepicker

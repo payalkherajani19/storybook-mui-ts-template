@@ -13,7 +13,7 @@ export interface DatepickerRef {
     clear: () => void
 }
 
-export interface BaseDatepickerProps extends Partial<Omit<MuiDatePickerProps, RemoveKeys>> {
+export interface BaseDatepickerProps extends Partial<Omit<MuiDatePickerProps<Date>, RemoveKeys>> {
     startDate?: string | null
     dateFormat?: string
     timezone?: string
@@ -37,7 +37,7 @@ export interface BaseDatepickerProps extends Partial<Omit<MuiDatePickerProps, Re
         marked?: string
         selectedMarked?: string
     }
-    renderInput?: MuiDatePickerProps['renderInput']
+    renderInput?: MuiDatePickerProps<Date>['renderInput']
     datepickerRef?: MutableRefObject<DatepickerRef>
     shouldStrikeOutDate?: (d: string) => boolean
     shouldStrikeOutDateClassName?: string

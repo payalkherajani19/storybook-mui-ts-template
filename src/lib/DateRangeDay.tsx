@@ -102,7 +102,7 @@ const PureDateRangeDay = <TDate extends any>(props: DateRangeDayProps<TDate>): R
     const {
         className,
         day,
-        inCurrentMonth,
+        outsideCurrentMonth,
         isEndOfHighlighting,
         isEndOfPreviewing,
         isHighlighting,
@@ -118,8 +118,8 @@ const PureDateRangeDay = <TDate extends any>(props: DateRangeDayProps<TDate>): R
     const isEndOfMonth = utils.isSameDay(day, utils.endOfMonth(day))
     const isStartOfMonth = utils.isSameDay(day, utils.startOfMonth(day))
 
-    const shouldRenderHighlight = isHighlighting && inCurrentMonth
-    const shouldRenderPreview = isPreviewing && inCurrentMonth
+    const shouldRenderHighlight = isHighlighting && outsideCurrentMonth
+    const shouldRenderPreview = isPreviewing && outsideCurrentMonth
 
     return (
         <div
@@ -141,11 +141,11 @@ const PureDateRangeDay = <TDate extends any>(props: DateRangeDayProps<TDate>): R
                 <Day<TDate>
                     {...other}
                     disableMargin
-                    allowSameDateSelection
-                    allowKeyboardControl={false}
+                    // allowSameDateSelection
+                    // allowKeyboardControl={false}
                     day={day}
                     selected={selected}
-                    inCurrentMonth={inCurrentMonth}
+                    outsideCurrentMonth={outsideCurrentMonth}
                     data-mui-test="DateRangeDay"
                     className={clsx(
                         classes.day,
