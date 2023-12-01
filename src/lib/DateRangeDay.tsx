@@ -2,10 +2,10 @@ import { ReactElement, memo } from 'react';
 import clsx from 'clsx';
 import { alpha, Theme } from '@mui/material/styles';
 import makeStyles from '@mui/styles/makeStyles';
-import { Day } from '@material-ui/pickers/Day';
-import { useUtils } from '@material-ui/pickers';
+import { PickersDay as Day } from '@mui/x-date-pickers/PickersDay';
+import { useUtils } from '@mui/x-date-pickers/internals/hooks/useUtils';
 // eslint-disable-next-line import/no-unresolved
-import { DayProps } from '@material-ui/pickers/views/Calendar/Day';
+import { PickersDayProps as DayProps } from '@mui/x-date-pickers/PickersDay';
 import { isEqual } from 'lodash-es';
 
 export interface DateRangeDayProps<TDate> extends DayProps<TDate> {
@@ -105,7 +105,7 @@ const PureDateRangeDay = <TDate extends any>(
   const {
     className,
     day,
-    inCurrentMonth,
+    outsideCurrentMonth,
     isEndOfHighlighting,
     isEndOfPreviewing,
     isHighlighting,
@@ -121,8 +121,8 @@ const PureDateRangeDay = <TDate extends any>(
   const isEndOfMonth = utils.isSameDay(day, utils.endOfMonth(day));
   const isStartOfMonth = utils.isSameDay(day, utils.startOfMonth(day));
 
-  const shouldRenderHighlight = isHighlighting && inCurrentMonth;
-  const shouldRenderPreview = isPreviewing && inCurrentMonth;
+  const shouldRenderHighlight = isHighlighting && outsideCurrentMonth;
+  const shouldRenderPreview = isPreviewing && outsideCurrentMonth;
 
   return (
     <div
@@ -148,11 +148,9 @@ const PureDateRangeDay = <TDate extends any>(
         <Day<TDate>
           {...other}
           disableMargin
-          allowSameDateSelection
-          allowKeyboardControl={false}
           day={day}
           selected={selected}
-          inCurrentMonth={inCurrentMonth}
+          outsideCurrentMonth={outsideCurrentMonth}
           data-mui-test="DateRangeDay"
           className={clsx(
             classes.day,

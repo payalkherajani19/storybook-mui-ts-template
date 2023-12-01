@@ -9,25 +9,23 @@ import {
 } from 'react';
 import { makeStyles } from '@mui/styles';
 import { TextField, Theme } from '@mui/material';
-import { StaticDatePickerProps as MuiDatePickerProps } from '@material-ui/pickers/DatePicker/DatePicker';
-import { StaticDateRangePickerProps as MuiDateRangePickerProps } from '@material-ui/pickers/DateRangePicker/DateRangePicker';
-import { Day } from '@material-ui/pickers/Day';
+import { StaticDatePickerProps  as MuiDatePickerProps } from '@mui/x-date-pickers';
+import { StaticDateRangePickerProps as MuiDateRangePickerProps } from '@mui/x-date-pickers-pro';
+import { PickersDay as Day } from '@mui/x-date-pickers/PickersDay';
 import moment, { Moment } from 'moment-timezone';
-import {
-  StaticDatePicker,
-  StaticDateRangePicker,
-  useUtils,
-} from '@material-ui/pickers';
+import { StaticDatePicker } from '@mui/x-date-pickers';
+import { StaticDateRangePicker } from '@mui/x-date-pickers-pro';
 import { debounce, xor } from 'lodash-es';
-import { MuiTextFieldProps } from '@material-ui/pickers/_shared/PureDateInput';
-import { DayProps } from '@material-ui/pickers/views/Calendar/Day';
+import { MuiTextFieldProps } from '@mui/x-date-pickers/internals/components/PureDateInput';
+import { PickersDayProps as DayProps } from '@mui/x-date-pickers/PickersDay';
 import clsx from 'clsx';
-import { DateRangeDayProps } from '@material-ui/pickers/DateRangePicker/DateRangePickerDay';
+import { DateRangeDayProps } from './DateRangeDay';
 import { StaticDatepickerProps } from './types';
 import { DateRangeDay } from './DateRangeDay';
 import useWeekUtils from './useWeekUtils';
 import { coerceArray } from './utils';
 import Loading from './Loading';
+import { useUtils } from '@mui/x-date-pickers/internals/hooks/useUtils';
 
 const DATEPICKER_LARGE_WIDTH = 348;
 const DATEPICKER_LARGE_HEIGHT = 232;
@@ -467,9 +465,9 @@ const useDatepicker = (
       const datepickerDate = day?.format('YYYY-MM-DD');
 
       const inCurrentMonth = dayComponentProps
-        ? dayComponentProps.inCurrentMonth
+        ? dayComponentProps.outsideCurrentMonth
         : (selectedDatesOrDateRangeDayProps as DateRangeDayProps<Moment>)
-            .inCurrentMonth;
+            .outsideCurrentMonth;
 
       const isSelected =
         inCurrentMonth &&
@@ -515,7 +513,6 @@ const useDatepicker = (
           return (
             <Day<Moment>
               {...dayComponentProps}
-              allowSameDateSelection
               selected={isSelected}
               {...commonProps}
             />
@@ -550,6 +547,7 @@ const useDatepicker = (
   } as any;
 
   let Component;
+  console.log({ clonedProps })
 
   if (clonedProps.mode === 'range') {
     Component = (

@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
-import { useUtils } from '@material-ui/pickers';
-import { DateRangeDayProps } from '@material-ui/pickers/DateRangePicker/DateRangePickerDay';
+import { useUtils } from '@mui/x-date-pickers/internals/hooks/useUtils';
+import { DateRangeDayProps } from './DateRangeDay';
 import { coerceArray } from './utils';
 
 const useWeekUtils = <TDate>(

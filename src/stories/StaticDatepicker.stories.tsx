@@ -3,6 +3,12 @@ import { Meta, StoryFn } from '@storybook/react';
 import moment from 'moment-timezone';
 import { range, sampleSize } from 'lodash-es';
 import { StaticDatepicker, StaticDatepickerProps } from '../lib';
+// import App from '../App';
+import {AdapterMoment} from '@mui/x-date-pickers/AdapterMoment';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { ThemeProvider } from '@mui/styles';
+import { createTheme, Theme } from '@mui/material/styles';
+import { green, purple } from '@mui/material/colors';
 
 export default {
   title: 'Datepicker/Static',
@@ -24,16 +30,29 @@ const Template: StoryFn<StaticDatepickerProps> = (args) => {
       }, 500);
     });
 
+    const theme = createTheme({
+      palette: {
+        primary: {
+          main: purple[500],
+        },
+        secondary: {
+          main: green[500],
+        },
+      },
+    });
+
   return (
-    <>
-      <StaticDatepicker
+    <ThemeProvider theme={theme}>
+        <LocalizationProvider dateAdapter={AdapterMoment}>
+       <StaticDatepicker
         {...args}
         value={state}
         onChange={setState}
         onMonthChange={handleMonthChange}
-      />
+       />
       <div>Value - {state}</div>
-    </>
+      </LocalizationProvider>
+    </ThemeProvider>
   );
 };
 

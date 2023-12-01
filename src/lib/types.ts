@@ -1,11 +1,10 @@
 import { MutableRefObject, ReactNode } from 'react';
-import { StaticDatePickerProps as MuiDatePickerProps } from '@material-ui/pickers/DatePicker/DatePicker';
+import { StaticDatePickerProps  as MuiDatePickerProps } from '@mui/x-date-pickers';
 import { DialogProps, PaperProps, PopoverProps } from '@mui/material';
-import { MuiTextFieldProps } from '@material-ui/pickers/_shared/PureDateInput';
-import { DateRangeDayProps } from '@material-ui/pickers/DateRangePicker/DateRangePickerDay';
+import { MuiTextFieldProps } from '@mui/x-date-pickers/internals/components/PureDateInput';
+import { DateRangeDayProps } from './DateRangeDay';
 import { Moment } from 'moment-timezone';
-import { DayProps } from '@material-ui/pickers/views/Calendar/Day';
-
+import { PickersDayProps as DayProps } from '@mui/x-date-pickers/PickersDay';
 type RemoveKeys =
   | 'onChange'
   | 'value'

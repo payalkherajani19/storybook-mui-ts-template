@@ -58,9 +58,10 @@ const Datepicker: FC<DatepickerProps> = ({
   ...props
 }) => {
   const classes = useStyles();
-  const isMobileView = useMediaQuery<Theme>((theme) =>
-    theme.breakpoints.down('sm')
-  );
+  // const isMobileView = useMediaQuery<Theme>((theme) =>
+  //   theme.breakpoints.down('sm')
+  // );
+  const isMobileView = true
   const popupId = useRef(nanoid()).current;
   const popupState = usePopupState({
     popupId,

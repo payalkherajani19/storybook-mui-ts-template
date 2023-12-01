@@ -1,11 +1,13 @@
 import { FC, useState } from 'react';
-import AdapterMoment from '@material-ui/pickers/adapter/moment';
-import { LocalizationProvider } from '@material-ui/pickers';
+import {AdapterMoment} from '@mui/x-date-pickers/AdapterMoment';
+import { LocalizationProvider } from '@mui/x-date-pickers';
 import { ThemeProvider } from '@mui/styles';
 import { createTheme, Theme } from '@mui/material/styles';
 import { Typography } from '@mui/material';
 import { Datepicker } from './lib';
 import StaticDatepicker from './lib/StaticDatepicker';
+import { green, purple } from '@mui/material/colors';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 declare module '@mui/styles/defaultTheme' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -21,13 +23,22 @@ const App: FC = () => {
     null,
   ]);
 
-  const theme = createTheme();
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: purple[500],
+      },
+      secondary: {
+        main: green[500],
+      },
+    },
+  });
 
   const sleep = () => new Promise((resolve) => setTimeout(resolve, 1000));
 
   return (
       <ThemeProvider theme={theme}>
-        <LocalizationProvider dateAdapter={AdapterMoment}>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
           <div>
             <div
               style={{
