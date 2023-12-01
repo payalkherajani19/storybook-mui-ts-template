@@ -47,7 +47,8 @@ export default function Button({
       style={{ backgroundColor }}
       {...props}
     >
-      <AbcIcon />{label}
+      <AbcIcon />
+      {label}
     </button>
   );
 }
