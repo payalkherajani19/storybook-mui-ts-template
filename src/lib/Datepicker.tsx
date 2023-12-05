@@ -120,7 +120,7 @@ const Datepicker: FC<DatepickerProps> = ({
     {},
     bindTrigger(popupState),
     { label: props.label, placeholder, onKeyDown: handleKeyDown },
-    props.TextFieldProps,
+     props.TextFieldProps,
     {
       value: textValue || '',
       InputProps: {
@@ -148,7 +148,7 @@ const Datepicker: FC<DatepickerProps> = ({
     return (
       <Popover
         {...PopoverProps}
-        PaperProps={PaperProps}
+        slotProps={{paper: PaperProps}}
         {...bindPopover(popupState)}
         {...(props.disabled ? { open: false } : {})}
       >
