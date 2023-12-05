@@ -3,6 +3,11 @@ import { Meta, StoryFn } from '@storybook/react';
 import moment from 'moment-timezone';
 import { range, sampleSize } from 'lodash-es';
 import { Datepicker, DatepickerProps } from '../lib';
+import {AdapterMoment} from '@mui/x-date-pickers/AdapterMoment';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { ThemeProvider } from '@mui/styles';
+import { createTheme, Theme } from '@mui/material/styles';
+import { green, purple } from '@mui/material/colors';
 
 export default {
   title: 'Datepicker/Popover',
@@ -24,8 +29,25 @@ const Template: StoryFn<DatepickerProps> = (args) => {
         );
       }, 500);
     });
+
+    const theme = createTheme({
+      palette: {
+        primary: {
+          main: purple[500],
+        },
+        secondary: {
+          main: green[500],
+        },
+      },
+      breakpoints: {
+        step: 5
+      }
+    });
+
   return (
     <>
+     <ThemeProvider theme={theme}>
+        <LocalizationProvider dateAdapter={AdapterMoment}>
       <Datepicker
         {...args}
         value={state}
@@ -34,6 +56,8 @@ const Template: StoryFn<DatepickerProps> = (args) => {
         disabled
       />
       <div>Value - {state}</div>
+      </LocalizationProvider>
+    </ThemeProvider>
     </>
   );
 };

@@ -30,11 +30,9 @@ const StaticDatepicker: FC<StaticDatepickerProps> = ({
 };
 
 StaticDatepicker.defaultProps = {
-  displayStaticWrapperAs: 'static',
   dateFormat: 'MMM DD, YYYY',
-  views: ['year', 'month', 'date'],
+  views: ['year', 'month', 'day'],
   showToolbar: false,
-  allowKeyboardControl: false,
 };
 
 export default StaticDatepicker;

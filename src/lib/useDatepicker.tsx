@@ -223,7 +223,7 @@ const scrollIntoView = debounce((el: HTMLDivElement) => {
 const useDatepicker = (
   props: StaticDatepickerProps
 ): {
-  datepickerProps: MuiDatePickerProps | MuiDateRangePickerProps;
+  datepickerProps: MuiDatePickerProps<Date, Date> | MuiDateRangePickerProps<Date, Date>;
   Component: ReactNode;
   LoadingOverlayComponent: ReactNode;
   textValue: string;
@@ -465,10 +465,9 @@ const useDatepicker = (
       const datepickerDate = day?.format('YYYY-MM-DD');
 
       const inCurrentMonth = dayComponentProps
-        ? dayComponentProps.outsideCurrentMonth
-        : (selectedDatesOrDateRangeDayProps as DateRangeDayProps<Moment>)
+        ? !dayComponentProps.outsideCurrentMonth
+        : !(selectedDatesOrDateRangeDayProps as DateRangeDayProps<Moment>)
             .outsideCurrentMonth;
-
       const isSelected =
         inCurrentMonth &&
         dayString &&
@@ -531,12 +530,11 @@ const useDatepicker = (
     ]
   );
 
-  const datepickerProps: MuiDatePickerProps | MuiDateRangePickerProps = {
+  const datepickerProps: MuiDatePickerProps<Date, Date> | MuiDateRangePickerProps<Date, Date> = {
     calendars: 2,
     renderDay,
     renderInput: defaultRenderInput,
     disableCloseOnSelect: clonedProps.mode === 'multiple',
-    allowSameDateSelection: true,
     ...weekUtils.getDatepickerProps(),
     ...rest,
     loading: false,
@@ -547,13 +545,12 @@ const useDatepicker = (
   } as any;
 
   let Component;
-  console.log({ clonedProps })
 
   if (clonedProps.mode === 'range') {
     Component = (
       <div className={clsx(classes.root, { [classes[size]]: true })}>
         <StaticDateRangePicker
-          {...(datepickerProps as MuiDateRangePickerProps)}
+          {...(datepickerProps as MuiDateRangePickerProps<Date, Date>)}
           displayStaticWrapperAs="desktop"
         />
       </div>
@@ -564,7 +561,7 @@ const useDatepicker = (
         ref={containerRef}
         className={clsx(classes.root, { [classes[size]]: true })}
       >
-        <StaticDatePicker {...(datepickerProps as MuiDatePickerProps)} />
+        <StaticDatePicker {...(datepickerProps as MuiDatePickerProps<Date, Date>)} />
       </div>
     );
   }

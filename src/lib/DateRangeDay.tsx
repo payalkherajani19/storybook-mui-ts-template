@@ -121,8 +121,9 @@ const PureDateRangeDay = <TDate extends any>(
   const isEndOfMonth = utils.isSameDay(day, utils.endOfMonth(day));
   const isStartOfMonth = utils.isSameDay(day, utils.startOfMonth(day));
 
-  const shouldRenderHighlight = isHighlighting && outsideCurrentMonth;
-  const shouldRenderPreview = isPreviewing && outsideCurrentMonth;
+  const shouldRenderHighlight = isHighlighting && !outsideCurrentMonth;
+  const shouldRenderPreview = isPreviewing && !outsideCurrentMonth;
+  // console.log({ shouldRenderHighlight, shouldRenderPreview})
 
   return (
     <div
@@ -164,6 +165,7 @@ const PureDateRangeDay = <TDate extends any>(
         />
       </div>
     </div>
+
   );
 };
 

@@ -20,6 +20,7 @@ import { makeStyles } from '@mui/styles';
 import clsx from 'clsx';
 import useDatepicker from './useDatepicker';
 import { DatepickerProps } from './types';
+import { useTheme } from '@mui/material/styles';
 
 const useStyles = makeStyles({
   dialog: {
@@ -58,10 +59,8 @@ const Datepicker: FC<DatepickerProps> = ({
   ...props
 }) => {
   const classes = useStyles();
-  // const isMobileView = useMediaQuery<Theme>((theme) =>
-  //   theme.breakpoints.down('sm')
-  // );
-  const isMobileView = true
+  const theme = useTheme();
+  const isMobileView = useMediaQuery<Theme>(theme.breakpoints.down('sm'));
   const popupId = useRef(nanoid()).current;
   const popupState = usePopupState({
     popupId,
@@ -170,9 +169,8 @@ const Datepicker: FC<DatepickerProps> = ({
 Datepicker.defaultProps = {
   displayStaticWrapperAs: 'desktop',
   dateFormat: 'MMM DD, YYYY',
-  views: ['year', 'month', 'date'],
+  views: ['year', 'month', 'day'],
   showToolbar: false,
-  allowKeyboardControl: true,
   PopoverProps: {
     anchorOrigin: {
       vertical: 'bottom',
