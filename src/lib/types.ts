@@ -1,0 +1,223 @@
+import {
+  ReactElement,
+  ComponentType,
+  CSSProperties,
+  ReactNode,
+  Dispatch,
+  SetStateAction,
+} from 'react';
+import { GridSize, SvgIconProps } from '@mui/material';
+
+export type Primitive = string | boolean | number;
+export type DeviceType = 'laptop' | 'tablet' | 'mobile';
+export type SettingItemType =
+  | 'text'
+  | 'image'
+  | 'button'
+  | 'condition'
+  | 'container'
+  | 'template'
+  | 'form-elements';
+
+export type SettingComponentType =
+  | 'align'
+  | 'backgroundColor'
+  | 'border'
+  | 'borderColor'
+  | 'borderRadius'
+  | 'buttonType'
+  | 'color'
+  | 'fontColor'
+  | 'fontFamily'
+  | 'fontWeight'
+  | 'height'
+  | 'image'
+  | 'imagePadding'
+  | 'linkColor'
+  | 'padding'
+  | 'size'
+  | 'space'
+  | 'spacing'
+  | 'textAlign'
+  | 'url'
+  | 'verticalAlign'
+  | 'width'
+  | 'labeledTextInput'
+  | 'labeledNumberInput'
+  | 'labeledSwitch'
+  | 'inputValidation'
+  | 'multilineValidation'
+  | 'inputOptions';
+
+export type GroupRenderMode = 'container' | 'heading' | 'hidden';
+export type ConditionOperator = 'EQUAL' | 'NOT_EQUAL' | 'IN' | 'NOT_IN';
+export type ConditionType = 'AND' | 'OR';
+export type ConditionDisplay = 'ALWAYS' | 'DISPLAY';
+export type ConditionRule = {
+  id: string;
+  operator: ConditionOperator;
+  value: Primitive;
+};
+
+export interface Condition {
+  type: ConditionType;
+  display: ConditionDisplay;
+  rules: ConditionRule[];
+}
+
+export interface Device {
+  type: DeviceType;
+  label: ReactElement;
+  icon: ComponentType<SvgIconProps>;
+}
+
+export type InitialValues = {
+  label?: string;
+  style?: CSSProperties;
+  [key: string]: any;
+};
+
+export type DndStateItem = {
+  id: string;
+  name: string;
+  parent: {
+    id: string;
+    type: DndItem['type'] | DndTemplateItem['type'];
+  };
+  values: InitialValues;
+};
+
+export type DndComponentSetting = {
+  type: SettingComponentType;
+  grid?: GridSize;
+  id: string;
+  label?: ReactElement;
+  //hideIfSet hides the settings if other setting is set. Container uses this field
+  hideIfSet?: string;
+};
+
+export type DndItemSetting = {
+  id: string;
+  label: ReactNode;
+  type: SettingItemType;
+  settings?: DndComponentSetting[];
+  component?: ReactElement;
+};
+
+export type DndContainerItem = {
+  render: (renderProps: RenderProps, children?: ReactNode) => ReactNode;
+  export: (renderProps: RenderProps, children?: string) => string;
+  initialValues: InitialValues;
+  settings?: DndItemSetting[];
+};
+
+export type DndComponentItem = {
+  render: (
+    renderProps: RenderProps,
+    id?: string,
+    formKey?: string
+  ) => ReactNode;
+  export: (renderProps: RenderProps, id?: string) => string;
+  initialValues?: InitialValues;
+  settings?: DndComponentSetting[];
+  formValue?: any;
+  validationSchema?: (
+    renderProps: RenderProps,
+    id?: string,
+    parentSchema?: any
+  ) => any;
+};
+
+export type DndBaseItem = {
+  render?: (renderProps: RenderProps, children?: ReactNode) => ReactNode;
+  export: (renderProps: RenderProps, children?: string) => string;
+  id: string;
+  label: ReactNode;
+  priority?: number;
+  initialValues?: InitialValues;
+  settings?: DndItemSetting[];
+};
+export type DndGroupItem = DndBaseItem & {
+  type: 'group';
+  renderMode: GroupRenderMode;
+  icon: ComponentType<SvgIconProps>;
+};
+export type DndBlockItem = DndBaseItem & {
+  type: 'block';
+  parent?: string;
+  image: string;
+  icon?: ComponentType<SvgIconProps>;
+  generateSettings?: (renderProps: RenderProps) => DndItemSetting[];
+  onlyAddOneTime?: boolean;
+};
+export type DndItem = DndGroupItem | DndBlockItem;
+
+export type DndTemplateItem = Omit<DndBaseItem, 'label'> & {
+  type: 'template';
+};
+
+export interface DndStateItemEntity {
+  id: string;
+}
+export interface DndState {
+  items: DndStateItemEntity[];
+  entities: Record<string, DndStateItem>;
+}
+
+export interface DndEditorContextProps {
+  setState: Dispatch<SetStateAction<DndState>>;
+  state: DndState;
+  template: DndTemplateItem;
+  itemsMap: Record<string, DndItem>;
+  items: DndItem[];
+  active: string | null;
+  onActiveChange: Dispatch<SetStateAction<string | null>>;
+  onSendEmail?: (emails: string[], html: string) => Promise<any>;
+  smartyTags?: Record<string, string>;
+  sampleData?: any;
+  name?: string;
+  buildermode: boolean;
+  children: ReactNode;
+}
+
+export type DndEditorContextPropsModified = Omit<
+  DndEditorContextProps,
+  'children'
+>;
+
+export type BooleanFormValue = {
+  boolean: boolean;
+  valueType: 'Boolean';
+};
+
+export type StringFormValue = {
+  text: string;
+  valueType: 'String';
+};
+
+export type DecimalFormValue = {
+  decimal: number;
+  valueType: 'Decimal';
+};
+
+export type NumberFormValue = {
+  number: number;
+  valueType: 'Number';
+};
+
+export type FormValue =
+  | BooleanFormValue
+  | StringFormValue
+  | DecimalFormValue
+  | NumberFormValue;
+
+export interface BlockRendererProps {
+  settings: DndItemSetting[];
+  state: InitialValues;
+  Formkey: string;
+}
+
+export type RenderProps = DndEditorContextProps & {
+  item?: DndStateItemEntity;
+  name?: string;
+};
