@@ -1,6 +1,6 @@
 import React, { MouseEvent } from 'react';
 import { FormikValues, useFormikContext } from 'formik';
-import { PubSub } from '@saastack/pubsub/src/';
+import { PubSub } from '@saastack/pubsub/';
 import { Trans } from '@lingui/macro';
 import {
   Grid,

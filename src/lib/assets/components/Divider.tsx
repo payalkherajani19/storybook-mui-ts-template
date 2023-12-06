@@ -1,5 +1,5 @@
 import React from 'react';
-import { PubSub } from '@saastack/pubsub/src/';
+import { PubSub } from '@saastack/pubsub/';
 import { DndComponentItem, RenderProps } from '../../types';
 import { styleToCss } from '../../utils';
 

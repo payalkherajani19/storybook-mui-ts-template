@@ -22,7 +22,7 @@ import {
   usePopupState,
 } from 'material-ui-popup-state/hooks';
 import React from 'react';
-import { PubSub } from '@saastack/pubsub/src';
+import { PubSub } from '@saastack/pubsub';
 import { DndBlockItem, RenderProps } from '../types';
 import { conditionBuilder, removeItem } from '../utils';
 

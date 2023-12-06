@@ -33,14 +33,14 @@ dependencies:
     specifier: ^6.18.3
     version: 6.18.3(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@mui/material@5.14.19)(@mui/system@5.14.19)(@types/react@18.2.39)(moment@2.29.4)(react-dom@18.2.0)(react@18.2.0)
   '@saastack/pubsub':
-    specifier: file:../saastack-UI-Pubsub-2/saastack-pubsub-0.1.21.tgz
-    version: file:../saastack-UI-Pubsub-2/saastack-pubsub-0.1.21.tgz
+    specifier: file:../saastack-UI-Pubsub/build/lib
+    version: file:../saastack-UI-Pubsub/build/lib
   '@saastack/rehooks':
-    specifier: file:../saastack-UI-rehooks/rehooks
-    version: file:../saastack-UI-rehooks/rehooks(react-dom@18.2.0)(react@18.2.0)
+    specifier: file:../saastack-UI-rehooks/build/lib
+    version: file:../saastack-UI-rehooks/build/lib(react-dom@18.2.0)(react@18.2.0)
   '@saastack/wysiwyg-editor':
-    specifier: file:../saastack-UI-wysiwyg-editor/wysiwyg-editor
-    version: file:../saastack-UI-wysiwyg-editor/wysiwyg-editor(lodash-es@4.17.21)(react-dom@18.2.0)(react@18.2.0)
+    specifier: file:../saastack-UI-wysiwyg-editor/build/lib
+    version: file:../saastack-UI-wysiwyg-editor/build/lib(lodash-es@4.17.21)(react-dom@18.2.0)(react@18.2.0)
   '@storybook/addon-actions':
     specifier: ^7.6.3
     version: 7.6.3
@@ -17709,17 +17709,6 @@ packages:
       - supports-color
     dev: true
 
-  /react-dom@17.0.2(react@17.0.2):
-    resolution: {integrity: sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA==}
-    peerDependencies:
-      react: 17.0.2
-    dependencies:
-      loose-envify: 1.4.0
-      object-assign: 4.1.1
-      react: 17.0.2
-      scheduler: 0.20.2
-    dev: false
-
   /react-dom@18.2.0(react@18.2.0):
     resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
     peerDependencies:
@@ -17975,14 +17964,6 @@ packages:
       prop-types: 15.8.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-    dev: false
-
-  /react@17.0.2:
-    resolution: {integrity: sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==}
-    engines: {node: '>=0.10.0'}
-    dependencies:
-      loose-envify: 1.4.0
-      object-assign: 4.1.1
     dev: false
 
   /react@18.2.0:
@@ -18669,13 +18650,6 @@ packages:
     dependencies:
       xmlchars: 2.2.0
     dev: true
-
-  /scheduler@0.20.2:
-    resolution: {integrity: sha512-2eWfGgAqqWFGqtdMmcL5zCMK1U8KlXv8SQFGglL3CEtd0aDVDWgeF/YoCmvln55m5zSk3J/20hTaSBeSObsQDQ==}
-    dependencies:
-      loose-envify: 1.4.0
-      object-assign: 4.1.1
-    dev: false
 
   /scheduler@0.23.0:
     resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
@@ -21710,29 +21684,16 @@ packages:
       toposort: 2.0.2
     dev: false
 
-  file:../saastack-UI-Pubsub-2/saastack-pubsub-0.1.21.tgz:
-    resolution: {integrity: sha512-AQD9j+iqGtCR3fs64zls3XGS7dEB5SQw/UXVywbTadExOAP2jlAsgfLB3Y+QrJukRRKaDUCsZjv69U/+ugsHmA==, tarball: file:../saastack-UI-Pubsub-2/saastack-pubsub-0.1.21.tgz}
+  file:../saastack-UI-Pubsub/build/lib:
+    resolution: {directory: ../saastack-UI-Pubsub/build/lib, type: directory}
     name: '@saastack/pubsub'
-    version: 0.1.21
     dependencies:
-      '@saastack/core-pubsub': file:../saastack-UI-core-pubsub/saastack-core-pubsub-0.1.9.tgz
+      '@saastack/core-pubsub': link:../saastack-UI-core-pubsub/build/lib
     dev: false
 
-  file:../saastack-UI-core-pubsub/saastack-core-pubsub-0.1.9.tgz:
-    resolution: {integrity: sha512-T7WaZyzY8aM63BZM8DpWkaC4+Eh97LAww29aRkQsk0wI9cuYmevdxxPeG5sa/71z7m+m3Byixy8OKuSf5PuDBw==, tarball: file:../saastack-UI-core-pubsub/saastack-core-pubsub-0.1.9.tgz}
-    name: '@saastack/core-pubsub'
-    version: 0.1.9
-    dependencies:
-      lodash-es: 4.17.21
-      multimatch: 5.0.0
-      nanoid: 3.3.7
-      react: 17.0.2
-      react-dom: 17.0.2(react@17.0.2)
-    dev: false
-
-  file:../saastack-UI-rehooks/rehooks(react-dom@18.2.0)(react@18.2.0):
-    resolution: {directory: ../saastack-UI-rehooks/rehooks, type: directory}
-    id: file:../saastack-UI-rehooks/rehooks
+  file:../saastack-UI-rehooks/build/lib(react-dom@18.2.0)(react@18.2.0):
+    resolution: {directory: ../saastack-UI-rehooks/build/lib, type: directory}
+    id: file:../saastack-UI-rehooks/build/lib
     name: '@saastack/rehooks'
     peerDependencies:
       react: '*'
@@ -21744,9 +21705,9 @@ packages:
       store: 2.0.12
     dev: false
 
-  file:../saastack-UI-wysiwyg-editor/wysiwyg-editor(lodash-es@4.17.21)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {directory: ../saastack-UI-wysiwyg-editor/wysiwyg-editor, type: directory}
-    id: file:../saastack-UI-wysiwyg-editor/wysiwyg-editor
+  file:../saastack-UI-wysiwyg-editor/build/lib(lodash-es@4.17.21)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {directory: ../saastack-UI-wysiwyg-editor/build/lib, type: directory}
+    id: file:../saastack-UI-wysiwyg-editor/build/lib
     name: '@saastack/wysiwyg-editor'
     peerDependencies:
       lodash-es: '*'

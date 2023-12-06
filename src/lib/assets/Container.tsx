@@ -1,5 +1,5 @@
 import React, { FC, ReactNode, MouseEvent } from 'react';
-import { PubSub } from '@saastack/pubsub/src';
+import { PubSub } from '@saastack/pubsub';
 import { Trans } from '@lingui/macro';
 import { Theme } from '@mui/material';
 import { makeStyles } from '@mui/styles';

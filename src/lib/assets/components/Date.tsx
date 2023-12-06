@@ -1,5 +1,5 @@
 import React, { MouseEvent } from 'react';
-import { PubSub } from '@saastack/pubsub/src/';
+import { PubSub } from '@saastack/pubsub/';
 import { Trans } from '@lingui/macro';
 import { FormLabel, TextField, Typography } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';

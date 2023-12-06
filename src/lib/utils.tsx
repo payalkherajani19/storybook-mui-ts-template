@@ -1,5 +1,5 @@
 import React, { CSSProperties } from 'react';
-import { PubSub } from '@saastack/pubsub/src';
+import { PubSub } from '@saastack/pubsub';
 import { Trans } from '@lingui/macro';
 import { FormikContextType, FormikValues } from 'formik';
 import juice from 'juice';

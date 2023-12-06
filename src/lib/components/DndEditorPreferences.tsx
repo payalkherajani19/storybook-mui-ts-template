@@ -14,7 +14,7 @@ import { groupBy } from 'lodash-es';
 import { Theme, Tooltip, Tabs, Tab } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { useDndEditorContext } from '../DndEditorProvider';
-import { PubSub } from '@saastack/pubsub/src';
+import { PubSub } from '@saastack/pubsub';
 import { SettingItemType, DndBlockItem } from '../types';
 import ConditionSettings from './preferences/ConditionSettings';
 import ContainerSettings from './preferences/ContainerSettings';

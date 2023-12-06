@@ -1,5 +1,5 @@
 import React, { MouseEvent } from 'react';
-import { PubSub } from '@saastack/pubsub/src';
+import { PubSub } from '@saastack/pubsub';
 import { Trans } from '@lingui/macro';
 import { pick } from 'lodash-es';
 import { DndComponentItem, RenderProps } from '../../types';
